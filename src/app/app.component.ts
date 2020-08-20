@@ -46,55 +46,67 @@ export class AppComponent  {
   }
 
   doThisThing() {
+    // simple flag to prevent running this function more than once
+    // at any given time
     if(this.doingThing)
       return;
     this.doingThing = true;
 
+    // we always want these first 3 columns
     this.displayedColumns = ['game','player1','player2'];
 
+    // add other player columns as necessary
     for(let c = 3; c <= this.playersPerGame; c++) {
       this.displayedColumns.push(`player${c}`)
     }
 
-    let norberts: {
-      [key:string]: number
-    } = {};
+    let norberts: { [key:string]: number } = {};
     this.dataSource = [];
     this.players.forEach((p , i) => {
       // construct a list with players and the number of games
-      // to be in
-      // not sure how i've managed it, but I need to add 1 here otherwise everyone misses
-      // a game. there's an off-by-1 error somewhere.
-      norberts[p] = this.gamesToPlayEach + 1;
+      // to which they can be allocated
+      norberts[p] = this.gamesToPlayEach;
     })
-    let g = 1;
+    let gameid = 1;
     let gamesToGo = this.gamesToGoCount(norberts);
     while(gamesToGo !== 0) {
+      // get the top players with the most games that still need to be allocated
       let herberts = this.nextPlayers(norberts);
       let game = {
-        no: g
+        no: gameid,
+        // player1, player2 added here etc
       }
-      g++;
+      gameid++;
       for(let p = 0; p < herberts.length; p++) {
         let herbert = herberts[p];
         game['player' + (p + 1)] = herbert;
+        // one less game for this player to be allocated to
         norberts[herbert]--;
+        // if we have no more games to allocate for this player
+        // remove them from the list
         if(norberts[herbert] === 0)
           delete norberts[herbert];
       }
+      
+      // add this game to the table
+      this.dataSource.push(game);
+
+      // if we have some players left but not enough to make up a game
+      // we'll report it and end the process
       if(Object.keys(norberts).length < this.playersPerGame) {
         // this might happen depending on no of players
         // and playersPerGame game values
         this.playersLeftOver = Object.keys(norberts);
         break;
       }
-      this.dataSource.push(game);
+
       gamesToGo = this.gamesToGoCount(norberts)
     }
     
    
-    
+    // redraw the table with the new data
     this.table.renderRows();
+    // allow another click    
     this.doingThing = false;
   }
 
@@ -127,7 +139,7 @@ export class AppComponent  {
     return p;
   }
 
-// https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb#325f
+// shuffle an array in place https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb#325f
   shuffle(a: Array<any>) {
     for(let i = a.length - 1; i > 0; i--){
       const j = Math.floor(Math.random() * i)
@@ -135,13 +147,13 @@ export class AppComponent  {
     }
   }
 
-  swap(a, i, j) {
+  swap(a: Array<any>, i: number, j:number) {
     const temp = a[i]
     a[i] = a[j]
     a[j] = temp
   }
 
-// chip stuff
+  // chip stuff
   add(event: MatChipInputEvent): void {
     const input = event.input;
     const value = event.value;

@@ -5,7 +5,7 @@
   </button>
   <mat-form-field style="margin-left: 10px">
     <mat-label>Number of games each</mat-label>
-    <input matInput type="number" [(ngModel)]="gamesToPlayEach">
+    <input matInput type="number" min="1" max="99" [(ngModel)]="gamesToPlayEach">
   </mat-form-field>
   <mat-form-field style="margin-left: 10px">
     <mat-label>Players per game</mat-label>
