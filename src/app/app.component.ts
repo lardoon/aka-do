@@ -6,6 +6,8 @@ import { CdkColumnDef } from '@angular/cdk/table';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
+import * as _ from "lodash";
+
 @Component({
   selector: 'my-app',
   templateUrl: './app.component.html',
@@ -127,17 +129,23 @@ export class AppComponent  {
     // create an array of arrays from object properties
     let entries = Object.entries(norberts);
     // add CHAOS
-    this.shuffle(entries);
+    // as we've included lodash we might as well
+    // use their shuffle
+    entries = _.shuffle(entries);
+    console.log(entries);
     // sort by number of games to go for each player
     // the shuffled order will be kept just within
     // those that have the same number of games to go
-    entries.sort((a, b) => b[1] - a[1]);
+    // using a stable sort to ensure we still keep the shuffled order
+    entries = _.sortBy(entries, [(o) => -o[1]]);
+    console.log(entries);
     // take the players with most games to be allocated to
     let top = entries.slice(0, this.playersPerGame);
     // just return the player names
     let p = [];
     for(let i = 0; i < this.playersPerGame; i++) {
-      p.push(top[i][0])
+      // unshift() to keep the order from shuffle
+      p.unshift(top[i][0])
     }
     return p;
   }
