@@ -36,7 +36,7 @@
   <ng-container matColumnDef="nudge">
     <mat-header-cell *matHeaderCellDef> Nudge </mat-header-cell>
     <mat-cell *matCellDef="let game"> 
-      <button mat-icon-button matTooltip="Subversion: rotate this game's players players leftwise" (click)="rotateGame(game)"><mat-icon>rotate_left</mat-icon></button>
+      <button mat-icon-button matTooltip="Subversion: rotate this game's players leftwise" (click)="rotateGame(game)"><mat-icon>rotate_left</mat-icon></button>
       <button mat-icon-button matTooltip="Turmoil: shuffle this game's players" (click)="shuffleGame(game)"><mat-icon>shuffle</mat-icon></button>
     </mat-cell>
   </ng-container>
