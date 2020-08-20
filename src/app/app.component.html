@@ -11,7 +11,9 @@
     <mat-label>Players per game</mat-label>
     <input matInput min="2" max="6" type="number" [(ngModel)]="playersPerGame">
   </mat-form-field>
+  <iframe style="display: inline-block;" height="40px" width="60px" src="https://www.youtube.com/embed/POv-3yIPSWc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <mat-form-field class="player-chip-list" style="margin-left: 10px">
+    
   <mat-chip-list #chipList >
     <mat-label>Players</mat-label>
     <mat-chip *ngFor="let player of players" (removed)="remove(player)">{{player}}
@@ -23,6 +25,7 @@
            [matChipInputAddOnBlur]="true"
            (matChipInputTokenEnd)="add($event)">
 </mat-form-field>
+
 <mat-card *ngIf="playersLeftOver.length">Oh no! <b>{{playersLeftOver.join(', ')}}</b> didn't get allocated for all their games!</mat-card>
 
   </div>

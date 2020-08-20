@@ -59,7 +59,7 @@ export class AppComponent  {
     for(let c = 3; c <= this.playersPerGame; c++) {
       this.displayedColumns.push(`player${c}`)
     }
-
+    this.playersLeftOver = [];
     let norberts: { [key:string]: number } = {};
     this.dataSource = [];
     this.players.forEach((p , i) => {
@@ -68,8 +68,21 @@ export class AppComponent  {
       norberts[p] = this.gamesToPlayEach;
     })
     let gameid = 1;
+
+    // keep track of whether there are any games still to allocate
+    // and we'll keep going until none left to allocate
     let gamesToGo = this.gamesToGoCount(norberts);
     while(gamesToGo !== 0) {
+
+      // if we have some players left but not enough to make up a game
+      // we'll report it and end the process
+      if(Object.keys(norberts).length < this.playersPerGame) {
+        // this might happen depending on no of players
+        // and playersPerGame game values
+        this.playersLeftOver = Object.keys(norberts);
+        break;
+      }
+
       // get the top players with the most games that still need to be allocated
       let herberts = this.nextPlayers(norberts);
       let game = {
@@ -91,19 +104,9 @@ export class AppComponent  {
       // add this game to the table
       this.dataSource.push(game);
 
-      // if we have some players left but not enough to make up a game
-      // we'll report it and end the process
-      if(Object.keys(norberts).length < this.playersPerGame) {
-        // this might happen depending on no of players
-        // and playersPerGame game values
-        this.playersLeftOver = Object.keys(norberts);
-        break;
-      }
-
       gamesToGo = this.gamesToGoCount(norberts)
     }
     
-   
     // redraw the table with the new data
     this.table.renderRows();
     // allow another click    
