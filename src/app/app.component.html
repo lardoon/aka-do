@@ -1,0 +1,77 @@
+<div class="example-container">
+  <button [disabled]="doingThing" mat-raised-button aria-label="Example icon button with a heart icon"
+  (click)="doThisThing()"
+>AKA DO
+  </button>
+  <mat-form-field style="margin-left: 10px">
+    <mat-label>Number of games each</mat-label>
+    <input matInput type="number" [(ngModel)]="gamesToPlayEach">
+  </mat-form-field>
+  <mat-form-field style="margin-left: 10px">
+    <mat-label>Players per game</mat-label>
+    <input matInput min="2" max="6" type="number" [(ngModel)]="playersPerGame">
+  </mat-form-field>
+  <mat-form-field class="player-chip-list" style="margin-left: 10px">
+  <mat-chip-list #chipList >
+    <mat-label>Players</mat-label>
+    <mat-chip *ngFor="let player of players" (removed)="remove(player)">{{player}}
+      <mat-icon matChipRemove >cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+  <input placeholder="Add players" [matChipInputFor]="chipList" 
+          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+           [matChipInputAddOnBlur]="true"
+           (matChipInputTokenEnd)="add($event)">
+</mat-form-field>
+<mat-card *ngIf="playersLeftOver.length">Oh no! <b>{{playersLeftOver.join(', ')}}</b> didn't get allocated for all their games!</mat-card>
+
+  </div>
+
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+<!-- Game number Column -->
+  <ng-container matColumnDef="game">
+    <mat-header-cell *matHeaderCellDef> Game </mat-header-cell>
+    <mat-cell *matCellDef="let game"> {{game.no}} </mat-cell>
+  </ng-container>
+
+  <!-- Host & first player Column -->
+  <ng-container matColumnDef="player1">
+    <mat-header-cell *matHeaderCellDef> Player 1 (Host) </mat-header-cell>
+    <mat-cell *matCellDef="let game"> {{game.player1}} </mat-cell>
+  </ng-container>
+
+  <!-- Second player Column -->
+  <ng-container matColumnDef="player2">
+    <mat-header-cell *matHeaderCellDef> Player 2 </mat-header-cell>
+    <mat-cell *matCellDef="let game"> {{game.player2}} </mat-cell>
+  </ng-container>
+
+  <!-- Third player Column -->
+  <ng-container matColumnDef="player3">
+    <mat-header-cell *matHeaderCellDef> Player 3 </mat-header-cell>
+    <mat-cell *matCellDef="let game"> {{game.player3}} </mat-cell>
+  </ng-container>
+
+   <!-- Fourth player Column -->
+  <ng-container matColumnDef="player4">
+    <mat-header-cell *matHeaderCellDef> Player 4 </mat-header-cell>
+    <mat-cell *matCellDef="let game"> {{game.player4}} </mat-cell>
+  </ng-container>
+
+   <!-- Fifth player Column -->
+  <ng-container matColumnDef="player5">
+    <mat-header-cell *matHeaderCellDef> Player 5 </mat-header-cell>
+    <mat-cell *matCellDef="let game"> {{game.player5}} </mat-cell>
+  </ng-container>
+
+   <!-- Sixth player Column -->
+  <ng-container matColumnDef="player6">
+    <mat-header-cell *matHeaderCellDef> Player 6 </mat-header-cell>
+    <mat-cell *matCellDef="let game"> {{game.player6}} </mat-cell>
+  </ng-container>
+
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
