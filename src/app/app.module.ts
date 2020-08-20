@@ -10,9 +10,10 @@ import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
-  imports:      [ NoopAnimationsModule, BrowserModule, FormsModule, MatTableModule, MatButtonModule, MatInputModule, MatChipsModule, MatIconModule, MatCardModule ],
+  imports:      [ NoopAnimationsModule, BrowserModule, FormsModule, MatTableModule, MatButtonModule, MatInputModule, MatChipsModule, MatIconModule, MatCardModule, MatTooltipModule ],
   declarations: [ AppComponent ],
   bootstrap:    [ AppComponent ]
 })

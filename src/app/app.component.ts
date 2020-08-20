@@ -38,7 +38,7 @@ export class AppComponent  {
 
   playersLeftOver: Array<string> = [];
 
-  displayedColumns = ['game','player1','player2','player3']
+  displayedColumns = ['nudge','game','player1','player2','player3']
   dataSource : Array<Object> = [];
   doingThing = false;
 
@@ -55,7 +55,7 @@ export class AppComponent  {
     this.doingThing = true;
 
     // we always want these first 3 columns
-    this.displayedColumns = ['game','player1','player2'];
+    this.displayedColumns = ['nudge','game','player1','player2'];
 
     // add other player columns as necessary
     for(let c = 3; c <= this.playersPerGame; c++) {
@@ -88,6 +88,7 @@ export class AppComponent  {
       // get the top players with the most games that still need to be allocated
       let herberts = this.nextPlayers(norberts);
       let game = {
+        playersPerGame: this.playersPerGame, // keep hold of this value in case we need it later
         no: gameid,
         // player1, player2 added here etc
       }
@@ -124,6 +125,22 @@ export class AppComponent  {
     return values.reduce((total, value) => total + value);
   }
 
+  rotateGame(game) {
+    let herbert = game.player1;
+    for(let p = 1; p < game.playersPerGame; p++) {
+      game[`player${p}`] = game[`player${p + 1}`];
+    }
+    game[`player${game.playersPerGame}`] = herbert;
+  }
+
+  shuffleGame(game) {
+    let entries = Object.entries(game).filter((e) => /player\d+/.test(e[0]));
+    entries = _.shuffle(entries);
+    for(let p = 1; p <= game.playersPerGame; p++) {
+      game[`player${p}`] = entries[p - 1][1];
+    }
+  }
+
 // select the next players for the game
   nextPlayers(norberts: {[key: string]:number}): Array<string> {
     // create an array of arrays from object properties
@@ -137,10 +154,11 @@ export class AppComponent  {
     // the shuffled order will be kept just within
     // those that have the same number of games to go
     // using a stable sort to ensure we still keep the shuffled order
+    // negating the value so we have descending order
     entries = _.sortBy(entries, [(o) => -o[1]]);
     console.log(entries);
     // take the players with most games to be allocated to
-    let top = entries.slice(0, this.playersPerGame);
+    let top = _.take(entries, this.playersPerGame);
     // just return the player names
     let p = [];
     for(let i = 0; i < this.playersPerGame; i++) {
@@ -148,20 +166,6 @@ export class AppComponent  {
       p.unshift(top[i][0])
     }
     return p;
-  }
-
-// shuffle an array in place https://medium.com/@nitinpatel_20236/how-to-shuffle-correctly-shuffle-an-array-in-javascript-15ea3f84bfb#325f
-  shuffle(a: Array<any>) {
-    for(let i = a.length - 1; i > 0; i--){
-      const j = Math.floor(Math.random() * i)
-      this.swap(a, i, j);
-    }
-  }
-
-  swap(a: Array<any>, i: number, j:number) {
-    const temp = a[i]
-    a[i] = a[j]
-    a[j] = temp
   }
 
   // chip stuff

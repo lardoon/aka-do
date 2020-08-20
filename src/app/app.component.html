@@ -32,16 +32,27 @@
 
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+    <!-- Nudge control Column -->
+  <ng-container matColumnDef="nudge">
+    <mat-header-cell *matHeaderCellDef> Nudge </mat-header-cell>
+    <mat-cell *matCellDef="let game"> 
+      <button mat-icon-button matTooltip="Subversion: rotate this game's players players leftwise" (click)="rotateGame(game)"><mat-icon>rotate_left</mat-icon></button>
+      <button mat-icon-button matTooltip="Turmoil: shuffle this game's players" (click)="shuffleGame(game)"><mat-icon>shuffle</mat-icon></button>
+    </mat-cell>
+  </ng-container>
+
 <!-- Game number Column -->
   <ng-container matColumnDef="game">
     <mat-header-cell *matHeaderCellDef> Game </mat-header-cell>
-    <mat-cell *matCellDef="let game"> {{game.no}} </mat-cell>
+    <mat-cell *matCellDef="let game" > {{game.no}} </mat-cell>
   </ng-container>
+
+
 
   <!-- Host & first player Column -->
   <ng-container matColumnDef="player1">
     <mat-header-cell *matHeaderCellDef> Player 1 (Host) </mat-header-cell>
-    <mat-cell *matCellDef="let game"> {{game.player1}} </mat-cell>
+    <mat-cell *matCellDef="let game" > {{game.player1}} </mat-cell>
   </ng-container>
 
   <!-- Second player Column -->
