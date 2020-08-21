@@ -1,5 +1,5 @@
 <div class="example-container">
-  <button [disabled]="doingThing" mat-raised-button aria-label="Example icon button with a heart icon"
+  <button [disabled]="doingThing" mat-raised-button aria-label="AKA DO"
   (click)="doThisThing()"
 >AKA DO
   </button>
@@ -11,6 +11,8 @@
     <mat-label>Players per game</mat-label>
     <input matInput min="2" max="6" type="number" [(ngModel)]="playersPerGame">
   </mat-form-field>
+  <button [disabled]="doingThing  || !dataSource || dataSource.length == 0" mat-raised-button aria-label="Export the result to file" style="margin-left: 10px" 
+    (click)="exportToCsv()">Export</button>
   <iframe style="display: inline-block;" height="40px" width="60px" src="https://www.youtube.com/embed/POv-3yIPSWc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
   <mat-form-field class="player-chip-list" style="margin-left: 10px">
     

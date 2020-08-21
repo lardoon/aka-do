@@ -6,6 +6,8 @@ import { CdkColumnDef } from '@angular/cdk/table';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {MatChipInputEvent} from '@angular/material/chips';
 
+import { saveAs } from 'file-saver';
+
 import * as _ from "lodash";
 
 @Component({
@@ -57,6 +59,18 @@ export class AppComponent  {
 
   ngOnInit() {
         
+  }
+
+  exportToCsv() {
+    let headers = this.displayedColumns.slice(1); // don't want nudge columns
+    let dataSource = <Array<any>> this.table.dataSource;
+    let data = dataSource.map(g => {
+      // slice 1 to remove gamesToPlayEach property
+      return Object.values(g).slice(1).join(', ');
+    });
+    let result = new Blob([[headers.join(','), data.join('\n')].join('\n')]);
+
+    saveAs(result, 'export.csv');
   }
 
   doThisThing() {
