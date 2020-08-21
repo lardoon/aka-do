@@ -197,11 +197,14 @@ export class AppComponent  {
   // chip stuff
   add(event: MatChipInputEvent): void {
     const input = event.input;
-    const value = event.value;
+    const val = event.value;
 
-    // Add our player
-    if ((value || '').trim()) {
-      this.players.push(value.trim());
+    const values = val.split(/,|[\r\n]+/g);
+    for(let value of values) {
+      // Add our player
+      if ((value || '').trim()) {
+        this.players.push(value.trim());
+      }
     }
 
     // Reset the input value
