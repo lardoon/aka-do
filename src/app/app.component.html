@@ -54,37 +54,37 @@
   <!-- Host & first player Column -->
   <ng-container matColumnDef="player1">
     <mat-header-cell *matHeaderCellDef> Player 1 (Host) </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player1 == hoverData}" (mouseover)="hovering(game.player1)" (mouseout)="notHovering()"> {{game.player1}} </mat-cell>
+    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player1 == highlight}" (click)="playerClick(game.player1)" (mouseover)="hovering(game.player1)" (mouseout)="notHovering()"> {{game.player1}} </mat-cell>
   </ng-container>
 
   <!-- Second player Column -->
   <ng-container matColumnDef="player2">
     <mat-header-cell *matHeaderCellDef> Player 2 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player2 == hoverData}" (mouseover)="hovering(game.player2)" (mouseout)="notHovering()"> {{game.player2}} </mat-cell>
+    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player2 == highlight}" (click)="playerClick(game.player2)" (mouseover)="hovering(game.player2)" (mouseout)="notHovering()"> {{game.player2}} </mat-cell>
   </ng-container>
 
   <!-- Third player Column -->
   <ng-container matColumnDef="player3">
     <mat-header-cell *matHeaderCellDef> Player 3 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player3 == hoverData}" (mouseover)="hovering(game.player3)" (mouseout)="notHovering()"> {{game.player3}} </mat-cell>
+    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player3 == highlight}" (click)="playerClick(game.player3)" (mouseover)="hovering(game.player3)" (mouseout)="notHovering()"> {{game.player3}} </mat-cell>
   </ng-container>
 
    <!-- Fourth player Column -->
   <ng-container matColumnDef="player4">
     <mat-header-cell *matHeaderCellDef> Player 4 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player4 == hoverData}" (mouseover)="hovering(game.player4)" (mouseout)="notHovering()"> {{game.player4}} </mat-cell>
+    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player4 == highlight}" (click)="playerClick(game.player4)" (mouseover)="hovering(game.player4)" (mouseout)="notHovering()"> {{game.player4}} </mat-cell>
   </ng-container>
 
    <!-- Fifth player Column -->
   <ng-container matColumnDef="player5">
     <mat-header-cell *matHeaderCellDef> Player 5 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player5 == hoverData}" (mouseover)="hovering(game.player5)" (mouseout)="notHovering()"> {{game.player5}} </mat-cell>
+    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player5 == highlight}" (click)="playerClick(game.player5)" (mouseover)="hovering(game.player5)" (mouseout)="notHovering()"> {{game.player5}} </mat-cell>
   </ng-container>
 
    <!-- Sixth player Column -->
   <ng-container matColumnDef="player6">
     <mat-header-cell *matHeaderCellDef> Player 6 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player6 == hoverData}" (mouseover)="hovering(game.player6)" (mouseout)="notHovering()"> {{game.player6}} </mat-cell>
+    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player6 == highlight}" (click)="playerClick(game.player6)" (mouseover)="hovering(game.player6)" (mouseout)="notHovering()"> {{game.player6}} </mat-cell>
   </ng-container>
 
 

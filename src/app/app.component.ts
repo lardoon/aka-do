@@ -40,21 +40,36 @@ export class AppComponent  {
 
   playersLeftOver: Array<string> = [];
 
-  displayedColumns = ['nudge','game','player1','player2','player3']
+  displayedColumns = []
   dataSource : Array<Object> = [];
   doingThing = false;
 
-  hoverData = '';
+  highlight = '';
+  stickyHighlight = false;
+
+  // if clicked, stick the highlight to the clicked
+  // player
+  playerClick(player:string) {
+    if(this.stickyHighlight) {
+      this.stickyHighlight = false;
+      this.notHovering();
+    } else {
+      this.hovering(player);
+      this.stickyHighlight = true;
+    }
+  }
 
   // record which player is currently being hovered
   // over so we can highlight all instances
   hovering(player: string) {
-    this.hoverData = player;
+    if(!this.stickyHighlight)
+      this.highlight = player;
   }
 
   // clear any hover data set in hovering()
   notHovering() {
-    this.hoverData = '';
+    if(!this.stickyHighlight)
+      this.highlight = '';
   }
 
   ngOnInit() {
@@ -66,7 +81,7 @@ export class AppComponent  {
     let dataSource = <Array<any>> this.table.dataSource;
     let data = dataSource.map(g => {
       // slice 1 to remove gamesToPlayEach property
-      return Object.values(g).slice(1).join(', ');
+      return Object.values(g).slice(1).join(',');
     });
     let result = new Blob([[headers.join(','), data.join('\n')].join('\n')]);
 
@@ -121,7 +136,7 @@ export class AppComponent  {
       gameid++;
       for(let p = 0; p < herberts.length; p++) {
         let herbert = herberts[p];
-        game['player' + (p + 1)] = herbert;
+        game[`player${p + 1}`] = herbert;
         // one less game for this player to be allocated to
         norberts[herbert]--;
         // if we have no more games to allocate for this player
