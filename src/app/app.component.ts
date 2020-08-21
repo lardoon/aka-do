@@ -42,6 +42,18 @@ export class AppComponent  {
   dataSource : Array<Object> = [];
   doingThing = false;
 
+  hoverData = '';
+
+  // record which player is currently being hovered
+  // over so we can highlight all instances
+  hovering(player: string) {
+    this.hoverData = player;
+  }
+
+  // clear any hover data set in hovering()
+  notHovering() {
+    this.hoverData = '';
+  }
 
   ngOnInit() {
         
@@ -54,7 +66,7 @@ export class AppComponent  {
       return;
     this.doingThing = true;
 
-    // we always want these first 3 columns
+    // we always want these first columns
     this.displayedColumns = ['nudge','game','player1','player2'];
 
     // add other player columns as necessary
