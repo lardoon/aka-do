@@ -21,6 +21,9 @@
     <mat-chip *ngFor="let player of players" (removed)="remove(player)">{{player}}
       <mat-icon matChipRemove >cancel</mat-icon>
     </mat-chip>
+    <button mat-button matTooltip="Clear player list" *ngIf="players && players.length != 0" matSuffix mat-icon-button aria-label="Clear" (click)="players=[]">
+    <mat-icon>close</mat-icon>
+  </button>
   </mat-chip-list>
   <input placeholder="Add players" [matChipInputFor]="chipList" 
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"

@@ -190,14 +190,14 @@ export class AppComponent  {
     // as we've included lodash we might as well
     // use their shuffle
     entries = _.shuffle(entries);
-    console.log(entries);
+    
     // sort by number of games to go for each player
     // the shuffled order will be kept just within
     // those that have the same number of games to go
     // using a stable sort to ensure we still keep the shuffled order
     // negating the value so we have descending order
     entries = _.sortBy(entries, [(o) => -o[1]]);
-    console.log(entries);
+    
     // take the players with most games to be allocated to
     let top = _.take(entries, this.playersPerGame);
     // just return the player names
