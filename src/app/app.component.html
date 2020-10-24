@@ -1,10 +1,11 @@
 <div class="example-container app-component-viewer">
 	<section class="mat-typography">
-		<h1>Aka Do <small>Aka's Chaos Game Roster Randomiser</small></h1>
+		<h1>Aka Do <small>Aka's Chaos Reborn Game Roster Randomiser</small></h1>
 
 		<p class="mat-body">Choose the number of games that each player should play and the number of players involved
 			in each game. Enter the list of player names by typing a name in the Players box and pressing
-			<kbd>Enter</kbd>. You can also paste in a comma-delimited list.
+			<kbd>Enter</kbd> or selecting one of the usual suspects from the dropdown. You can also paste in a
+			comma-delimited list.
 			Clear the list by clicking the
 			<mat-icon>close</mat-icon> button. When ready, click the <kbd>Aka Do</kbd> to Aka do and
 			generate your fixture list.
@@ -36,15 +37,23 @@
 					<button mat-button matTooltip="Clear player list" *ngIf="players && players.length != 0" matSuffix mat-icon-button aria-label="Clear" (click)="players=[]">
     <mat-icon>close</mat-icon>
   </button>
-				</mat-chip-list>
-				<input placeholder="Add players" [matChipInputFor]="chipList"
+					<input placeholder="Add players" [matChipInputFor]="chipList" #playerInput
+          [formControl]="playerControl"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-           [matChipInputAddOnBlur]="true"
-           (matChipInputTokenEnd)="add($event)">
-</mat-form-field>
+           matChipInputAddOnBlur="false"
+           (matChipInputTokenEnd)="add($event)"
+           [matAutocomplete]="auto">
+				</mat-chip-list>
 
-				<mat-card *ngIf="playersLeftOver.length"><b>{{playersLeftOver.join(', ')}}</b> didn't get
-					allocated for all their games</mat-card>
+					<mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+						<mat-option *ngFor="let player of filteredPlayers | async" [value]="player">
+							{{player}}
+						</mat-option>
+					</mat-autocomplete>
+			</mat-form-field>
+
+			<mat-card *ngIf="playersLeftOver.length"><b>{{playersLeftOver.join(', ')}}</b> didn't get
+				allocated for all their games</mat-card>
 
 </div>
 
