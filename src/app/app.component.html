@@ -1,4 +1,16 @@
 <div class="example-container app-component-viewer">
+	<section class="mat-typography">
+		<h1>Aka Do <small>Aka's Chaos Game Roster Randomiser</small></h1>
+
+		<p class="mat-body">Choose the number of games that each player should play and the number of players involved
+			in each game. Enter the list of player names by typing a name in the Players box and pressing
+			<kbd>Enter</kbd>. You can also paste in a comma-delimited list.
+			Clear the list by clicking the
+			<mat-icon>close</mat-icon> button. When ready, click the <kbd>Aka Do</kbd> to Aka do and
+			generate your fixture list.
+		</p>
+		<p class="mat-body"> Click <kbd>Export</kbd> to download a CSV file of the list.</p>
+	</section>
 	<button [disabled]="doingThing" mat-raised-button aria-label="AKA DO"
   (click)="doThisThing()"
 >AKA DO
@@ -11,8 +23,8 @@
 			<mat-label>Players per game</mat-label>
 			<input matInput min="2" max="6" type="number" [(ngModel)]="playersPerGame">
   </mat-form-field>
-			<button [disabled]="doingThing  || !dataSource || dataSource.length == 0" mat-raised-button aria-label="Export the result to file" style="margin-left: 10px"
-    (click)="exportToCsv()">Export</button>
+			<button [disabled]="doingThing  || !dataSource || dataSource.length == 0" mat-raised-button  aria-label="Export the result to file" style="margin-left: 10px"
+    (click)="exportToCsv()"><mat-icon>get_app</mat-icon> Export</button>
 
 			<mat-form-field class="player-chip-list" style="margin-left: 10px">
 
@@ -31,8 +43,8 @@
            (matChipInputTokenEnd)="add($event)">
 </mat-form-field>
 
-				<mat-card *ngIf="playersLeftOver.length">Oh no! <b>{{playersLeftOver.join(', ')}}</b> didn't get
-					allocated for all their games!</mat-card>
+				<mat-card *ngIf="playersLeftOver.length"><b>{{playersLeftOver.join(', ')}}</b> didn't get
+					allocated for all their games</mat-card>
 
 </div>
 

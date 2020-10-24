@@ -3,14 +3,19 @@ p {
 }
 
 .highlight {
-  background-color: #616161;
+  background-color: #61616150;
   color: #fff;
 }
 
 input[type="number"],
 mat-chip-list,
-.mat-chip-input {
+.mat-chip-input,
+.mat-typography {
   color: #fff;
+}
+
+.mat-typography mat-icon {
+  vertical-align: middle;
 }
 
 mat-table {
