@@ -3,6 +3,25 @@ p {
 }
 
 .highlight {
-  background-color: #eee;
+  background-color: #616161;
+  color: #fff;
 }
 
+input[type="number"],
+mat-chip-list,
+.mat-chip-input {
+  color: #fff;
+}
+
+mat-table {
+  background: #42424250;
+}
+
+mat-cell,
+mat-header-cell {
+  padding-top: 7px;
+  padding-bottom: 7px;
+  padding-right: 8px;
+  padding-left: 45px;
+  border-radius: 180px;
+}

@@ -1,96 +1,109 @@
-<div class="example-container">
-  <button [disabled]="doingThing" mat-raised-button aria-label="AKA DO"
+<div class="example-container app-component-viewer">
+	<button [disabled]="doingThing" mat-raised-button aria-label="AKA DO"
   (click)="doThisThing()"
 >AKA DO
   </button>
-  <mat-form-field style="margin-left: 10px">
-    <mat-label>Number of games each</mat-label>
-    <input matInput type="number" min="1" max="99" [(ngModel)]="gamesToPlayEach">
+	<mat-form-field style="margin-left: 10px">
+		<mat-label>Number of games each</mat-label>
+		<input matInput type="number" min="1" max="99" [(ngModel)]="gamesToPlayEach">
   </mat-form-field>
-  <mat-form-field style="margin-left: 10px">
-    <mat-label>Players per game</mat-label>
-    <input matInput min="2" max="6" type="number" [(ngModel)]="playersPerGame">
+		<mat-form-field style="margin-left: 10px">
+			<mat-label>Players per game</mat-label>
+			<input matInput min="2" max="6" type="number" [(ngModel)]="playersPerGame">
   </mat-form-field>
-  <button [disabled]="doingThing  || !dataSource || dataSource.length == 0" mat-raised-button aria-label="Export the result to file" style="margin-left: 10px" 
+			<button [disabled]="doingThing  || !dataSource || dataSource.length == 0" mat-raised-button aria-label="Export the result to file" style="margin-left: 10px"
     (click)="exportToCsv()">Export</button>
-  <iframe style="display: inline-block;margin-left:10px" height="40px" width="60px" src="https://www.youtube.com/embed/POv-3yIPSWc" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  <mat-form-field class="player-chip-list" style="margin-left: 10px">
-    
-  <mat-chip-list #chipList >
-    <mat-label>Players</mat-label>
-    <mat-chip *ngFor="let player of players" (removed)="remove(player)">{{player}}
-      <mat-icon matChipRemove >cancel</mat-icon>
-    </mat-chip>
-    <button mat-button matTooltip="Clear player list" *ngIf="players && players.length != 0" matSuffix mat-icon-button aria-label="Clear" (click)="players=[]">
+
+			<mat-form-field class="player-chip-list" style="margin-left: 10px">
+
+				<mat-chip-list #chipList>
+					<mat-label>Players</mat-label>
+					<mat-chip *ngFor="let player of players" (removed)="remove(player)">{{player}}
+						<mat-icon matChipRemove>cancel</mat-icon>
+					</mat-chip>
+					<button mat-button matTooltip="Clear player list" *ngIf="players && players.length != 0" matSuffix mat-icon-button aria-label="Clear" (click)="players=[]">
     <mat-icon>close</mat-icon>
   </button>
-  </mat-chip-list>
-  <input placeholder="Add players" [matChipInputFor]="chipList" 
+				</mat-chip-list>
+				<input placeholder="Add players" [matChipInputFor]="chipList"
           [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
            [matChipInputAddOnBlur]="true"
            (matChipInputTokenEnd)="add($event)">
 </mat-form-field>
 
-<mat-card *ngIf="playersLeftOver.length">Oh no! <b>{{playersLeftOver.join(', ')}}</b> didn't get allocated for all their games!</mat-card>
+				<mat-card *ngIf="playersLeftOver.length">Oh no! <b>{{playersLeftOver.join(', ')}}</b> didn't get
+					allocated for all their games!</mat-card>
 
-  </div>
+</div>
 
 <mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!-- Nudge control Column -->
-  <ng-container matColumnDef="nudge">
-    <mat-header-cell *matHeaderCellDef> Nudge </mat-header-cell>
-    <mat-cell *matCellDef="let game"> 
-      <button mat-icon-button matTooltip="Subversion: rotate this game's players leftwise" (click)="rotateGame(game)"><mat-icon>rotate_left</mat-icon></button>
-      <button mat-icon-button matTooltip="Turmoil: shuffle this game's players" (click)="shuffleGame(game)"><mat-icon>shuffle</mat-icon></button>
-    </mat-cell>
-  </ng-container>
+	<!-- Nudge control Column -->
+	<ng-container matColumnDef="nudge">
+		<mat-header-cell *matHeaderCellDef> Nudge </mat-header-cell>
+		<mat-cell *matCellDef="let game">
+			<button mat-icon-button matTooltip="Subversion: rotate this game's players leftwise" (click)="rotateGame(game)"><mat-icon>rotate_left</mat-icon></button>
+			<button mat-icon-button matTooltip="Turmoil: shuffle this game's players" (click)="shuffleGame(game)"><mat-icon>shuffle</mat-icon></button>
+		</mat-cell>
+	</ng-container>
 
-<!-- Game number Column -->
-  <ng-container matColumnDef="game">
-    <mat-header-cell *matHeaderCellDef> Game </mat-header-cell>
-    <mat-cell *matCellDef="let game" > {{game.no}} </mat-cell>
-  </ng-container>
-
-
-
-  <!-- Host & first player Column -->
-  <ng-container matColumnDef="player1">
-    <mat-header-cell *matHeaderCellDef> Player 1 (Host) </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player1 == highlight}" (click)="playerClick(game.player1)" (mouseover)="hovering(game.player1)" (mouseout)="notHovering()"> {{game.player1}} </mat-cell>
-  </ng-container>
-
-  <!-- Second player Column -->
-  <ng-container matColumnDef="player2">
-    <mat-header-cell *matHeaderCellDef> Player 2 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player2 == highlight}" (click)="playerClick(game.player2)" (mouseover)="hovering(game.player2)" (mouseout)="notHovering()"> {{game.player2}} </mat-cell>
-  </ng-container>
-
-  <!-- Third player Column -->
-  <ng-container matColumnDef="player3">
-    <mat-header-cell *matHeaderCellDef> Player 3 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player3 == highlight}" (click)="playerClick(game.player3)" (mouseover)="hovering(game.player3)" (mouseout)="notHovering()"> {{game.player3}} </mat-cell>
-  </ng-container>
-
-   <!-- Fourth player Column -->
-  <ng-container matColumnDef="player4">
-    <mat-header-cell *matHeaderCellDef> Player 4 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player4 == highlight}" (click)="playerClick(game.player4)" (mouseover)="hovering(game.player4)" (mouseout)="notHovering()"> {{game.player4}} </mat-cell>
-  </ng-container>
-
-   <!-- Fifth player Column -->
-  <ng-container matColumnDef="player5">
-    <mat-header-cell *matHeaderCellDef> Player 5 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player5 == highlight}" (click)="playerClick(game.player5)" (mouseover)="hovering(game.player5)" (mouseout)="notHovering()"> {{game.player5}} </mat-cell>
-  </ng-container>
-
-   <!-- Sixth player Column -->
-  <ng-container matColumnDef="player6">
-    <mat-header-cell *matHeaderCellDef> Player 6 </mat-header-cell>
-    <mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player6 == highlight}" (click)="playerClick(game.player6)" (mouseover)="hovering(game.player6)" (mouseout)="notHovering()"> {{game.player6}} </mat-cell>
-  </ng-container>
+	<!-- Game number Column -->
+	<ng-container matColumnDef="game">
+		<mat-header-cell *matHeaderCellDef> Game </mat-header-cell>
+		<mat-cell *matCellDef="let game"> {{game.no}} </mat-cell>
+	</ng-container>
 
 
-  <mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+	<!-- Host & first player Column -->
+	<ng-container matColumnDef="player1">
+		<mat-header-cell *matHeaderCellDef> Player 1 (Host) </mat-header-cell>
+		<mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player1 == highlight}"
+			(click)="playerClick(game.player1)" (mouseover)="hovering(game.player1)" (mouseout)="notHovering()">
+			{{game.player1}} </mat-cell>
+	</ng-container>
+
+	<!-- Second player Column -->
+	<ng-container matColumnDef="player2">
+		<mat-header-cell *matHeaderCellDef> Player 2 </mat-header-cell>
+		<mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player2 == highlight}"
+			(click)="playerClick(game.player2)" (mouseover)="hovering(game.player2)" (mouseout)="notHovering()">
+			{{game.player2}} </mat-cell>
+	</ng-container>
+
+	<!-- Third player Column -->
+	<ng-container matColumnDef="player3">
+		<mat-header-cell *matHeaderCellDef> Player 3 </mat-header-cell>
+		<mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player3 == highlight}"
+			(click)="playerClick(game.player3)" (mouseover)="hovering(game.player3)" (mouseout)="notHovering()">
+			{{game.player3}} </mat-cell>
+	</ng-container>
+
+	<!-- Fourth player Column -->
+	<ng-container matColumnDef="player4">
+		<mat-header-cell *matHeaderCellDef> Player 4 </mat-header-cell>
+		<mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player4 == highlight}"
+			(click)="playerClick(game.player4)" (mouseover)="hovering(game.player4)" (mouseout)="notHovering()">
+			{{game.player4}} </mat-cell>
+	</ng-container>
+
+	<!-- Fifth player Column -->
+	<ng-container matColumnDef="player5">
+		<mat-header-cell *matHeaderCellDef> Player 5 </mat-header-cell>
+		<mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player5 == highlight}"
+			(click)="playerClick(game.player5)" (mouseover)="hovering(game.player5)" (mouseout)="notHovering()">
+			{{game.player5}} </mat-cell>
+	</ng-container>
+
+	<!-- Sixth player Column -->
+	<ng-container matColumnDef="player6">
+		<mat-header-cell *matHeaderCellDef> Player 6 </mat-header-cell>
+		<mat-cell *matCellDef="let game" [ngClass]="{highlight: game.player6 == highlight}"
+			(click)="playerClick(game.player6)" (mouseover)="hovering(game.player6)" (mouseout)="notHovering()">
+			{{game.player6}} </mat-cell>
+	</ng-container>
+
+
+	<mat-header-row *matHeaderRowDef="displayedColumns;sticky:true"></mat-header-row>
+	<mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>

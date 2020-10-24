@@ -1,7 +1,13 @@
 /* Add application styles & imports to this file! */
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 
 .player-chip-list {
   width: 100%;
 }
 
+body {
+  background-color: #000;
+  background-image: url(https://steamcdn-a.akamaihd.net/steamcommunity/public/images/items/319050/982d6af2b07aff256d44b7feb217f847786bce69.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
